@@ -40,7 +40,7 @@ const formatResponse = (text) => {
 const callGeminiAPI = async (prompt, retries = 3, delay = 1000) => {
   const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
   const payload = { contents: chatHistory };
-  const apiKey = "AIzaSyA7Cs2VMfGKs431nHym0dJfIYbAcBd0ITU";
+  const apiKey = "YOUR_API_KEY_HERE";
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
   if (!apiKey || apiKey === "YOUR_API_KEY_HERE") {
     return "API key is not configured.";
