@@ -1,1 +1,185 @@
-import React, { useState, useEffect, useRef } from "react";import ReactPlayer from "react-player";import { motion } from "framer-motion";import { Camera, Play, Pause, Volume2, VolumeX, Maximize2, Minimize2, RotateCw, Settings, Eye, Globe, Satellite,  } from "lucide-react";const LiveFeeds = () => {  const [selectedFeed, setSelectedFeed] = useState(0);  const [isPlaying, setIsPlaying] = useState(true);  const [isMuted, setIsMuted] = useState(true);  const [isFullscreen, setIsFullscreen] = useState(false);  const [volume, setVolume] = useState(0.8);  const [feedStatus, setFeedStatus] = useState({});  const playerRef = useRef(null);  const isMounted = useRef(true);  const cameraFeeds = [    {      id: "iss-hdev",      name: "ISS HD Earth Viewing",      description:        "Live HD view of Earth from the International Space Station. May show darkness during orbital night.",      url: "https://www.youtube.com/watch?v=xRPjKQtRXR8",      type: "youtube",      icon: Globe,      status: "live",    },    {      id: "nasa-tv",      name: "NASA TV Public Channel (Official)",      description: "Official NASA TV broadcast for missions and ISS events.",      url: "https://www.youtube.com/watch?v=21X5lGlDOfg",      type: "youtube",      icon: Satellite,      status: "live",    },    {      id: "earth-observation",      name: "Earth Observation Camera",      description:        "Alternate view of Earth, often used for external observation or experiments.",      url: "https://www.youtube.com/watch?v=fO9e9jnhYK8",      type: "youtube",      icon: Eye,      status: "live",    },    {      id: "alternate-view",      name: "Internal/Alternate ISS View",      description:        "View typically cycling between internal space station shots or docking ports.",      url: "https://www.youtube.com/watch?v=iYmvCUonukw",      type: "youtube",      icon: Camera,      status: "live",    },  ];  useEffect(() => {    isMounted.current = true;    const checkFeedStatus = () => {      cameraFeeds.forEach((feed) => {        const status = Math.random() > 0.1 ? "online" : "offline";        setFeedStatus((prev) => ({          ...prev,          [feed.id]: status,        }));      });    };    checkFeedStatus();    const interval = setInterval(checkFeedStatus, 30000);    return () => {      isMounted.current = false;      if (playerRef.current) {        try {          const internalPlayer = playerRef.current.getInternalPlayer();          if (            internalPlayer &&            typeof internalPlayer.pauseVideo === "function"          ) {            internalPlayer.pauseVideo();          } else if (            internalPlayer &&            typeof internalPlayer.pause === "function"          ) {            internalPlayer.pause();          }        } catch (e) {          console.warn("Error pausing media on unmount:", e);        }      }      clearInterval(interval);    };  }, []);  const handleFeedSelect = (index) => {    setSelectedFeed(index);    setIsPlaying(true);    setIsMuted(true);  };  const togglePlay = () => {    try {      setIsPlaying(!isPlaying);    } catch (error) {      console.warn("Play toggle error:", error);    }  };  const toggleMute = () => {    try {      setIsMuted(!isMuted);    } catch (error) {      console.warn("Mute toggle error:", error);    }  };  const toggleFullscreen = () => {    setIsFullscreen(!isFullscreen);    const wrapper = document.querySelector(".main-player");    if (!document.fullscreenElement) {      if (wrapper.requestFullscreen) {        wrapper.requestFullscreen();      }    } else {      if (document.exitFullscreen) {        document.exitFullscreen();      }    }  };  const currentFeed = cameraFeeds[selectedFeed];  const FeedSelector = () => (    <div className="feed-selector">      <h3>Available Camera Feeds</h3>      <div className="feed-grid">        {cameraFeeds.map((feed, index) => {          const IconComponent = feed.icon;          const isActive = selectedFeed === index;          const status = feedStatus[feed.id] || "checking";          return (            <motion.div              key={feed.id}              className={`feed-card ${                isActive ? "active" : ""              } status-${status}`}              onClick={() => handleFeedSelect(index)}              whileHover={{ scale: 1.05 }}              whileTap={{ scale: 0.95 }}            >              <div className="feed-icon">                <IconComponent size={24} />              </div>              <div className="feed-info">                <h4 className="feed-name">{feed.name}</h4>                <p className="feed-description">{feed.description}</p>                <div className="feed-status">                  <span className={`status-indicator status-dot-${status}`}>                    ● {status}                  </span>                  <span className="feed-type">{feed.type}</span>                </div>              </div>            </motion.div>          );        })}      </div>    </div>  );  const PlayerControls = () => (    <div className="player-controls">      <div className="controls-left">        <button          className="control-btn"          onClick={togglePlay}          title={isPlaying ? "Pause" : "Play"}        >          {isPlaying ? <Pause size={20} /> : <Play size={20} />}        </button>        <button          className="control-btn"          onClick={toggleMute}          title={isMuted ? "Unmute" : "Mute"}        >          {isMuted || volume === 0 ? (            <VolumeX size={20} />          ) : (            <Volume2 size={20} />          )}        </button>        <div className="volume-slider">          <input            type="range"            min="0"            max="1"            step="0.1"            value={volume}            onChange={(e) => {              const newVolume = parseFloat(e.target.value);              setVolume(newVolume);              if (newVolume > 0 && isMuted) setIsMuted(false);              if (newVolume === 0) setIsMuted(true);            }}          />        </div>      </div>      <div className="controls-center">        <span className="current-feed-name">{currentFeed.name}</span>      </div>      <div className="controls-right">        <button          className="control-btn"          onClick={() => window.location.reload()}          title="Refresh Feed"        >          <RotateCw size={20} />        </button>        <button className="control-btn" title="Settings">          <Settings size={20} />        </button>        <button          className="control-btn"          onClick={toggleFullscreen}          title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}        >          {isFullscreen ? <Minimize2 size={20} /> : <Maximize2 size={20} />}        </button>      </div>    </div>  );  const LiveIndicator = () => (    <motion.div      className="live-indicator"      animate={{ opacity: [1, 0.5, 1] }}      transition={{ duration: 2, repeat: Infinity }}    >      <span className="live-dot">●</span>      LIVE    </motion.div>  );  const FeedInfo = () => (    <div className="feed-info-panel">      <h4>Feed Information</h4>      <div className="info-item">        <span className="info-label">Source:</span>        <span className="info-value">{currentFeed.name}</span>      </div>      <div className="info-item">        <span className="info-label">Status:</span>        <span className="info-value">          <span            className={`status-dot status-dot-${              feedStatus[currentFeed.id] || "checking"            }`}          >            ●          </span>          {(feedStatus[currentFeed.id] || "checking").toUpperCase()}        </span>      </div>      <div className="info-item">        <span className="info-label">Type:</span>        <span className="info-value">{currentFeed.type.toUpperCase()}</span>      </div>      <div className="info-item-full">        <span className="info-label">Description:</span>        <p className="info-value-block">{currentFeed.description}</p>      </div>    </div>  );  const TechnicalInfo = () => (    <div className="technical-info">      <h4>Technical Details</h4>      <div className="tech-grid">        <div className="tech-item">          <span className="tech-label">Resolution:</span>          <span className="tech-value">1920x1080</span>        </div>        <div className="tech-item">          <span className="tech-label">Frame Rate:</span>          <span className="tech-value">30 FPS</span>        </div>        <div className="tech-item">          <span className="tech-label">Latency:</span>          <span className="tech-value">~10-15s</span>        </div>        <div className="tech-item">          <span className="tech-label">Bandwidth:</span>          <span className="tech-value">~2-5 Mbps</span>        </div>      </div>      <div className="disclaimers">        <h5>Important Notes:</h5>        <ul>          <li>            Feeds may experience interruptions due to satellite communications          </li>          <li>            During orbital night periods, external cameras may show darkness          </li>        </ul>      </div>    </div>  );  return (    <div className={`live-feeds-container ${isFullscreen ? "fullscreen" : ""}`}>      <div className="feeds-header">        <h2>ISS Live Camera Feeds</h2>      </div>      <div className="feeds-content">        <div className="main-player">          <div className="player-wrapper">            <ReactPlayer              ref={playerRef}              url={currentFeed.url}              playing={isPlaying}              muted={isMuted}              volume={isMuted ? 0 : volume}              width="100%"              height="100%"              controls={false}              config={{                youtube: {                  playerVars: {                    autoplay: 1,                    mute: 1,                    disablekb: 1,                    rel: 0,                    showinfo: 0,                    enablejsapi: 1,                  },                  playerOptions: {                    host: "https://www.youtube.com",                    playsinline: 1,                  },                },                forceProvider: "youtube",              }}              playsinline              onError={(error) => {                console.error("Player error:", error);              }}              onReady={() => {                console.log("Player ready");              }}              onStart={() => {                console.log("Player started");              }}              onPlay={() => {                setIsPlaying(true);              }}              onPause={() => {                setIsPlaying(false);              }}              onEnded={() => {                console.log("Stream ended");              }}            />            {}            <div className="player-overlay">              <div className="overlay-top">                <LiveIndicator />                <div className="current-time">                  {new Date().toLocaleTimeString()} UTC                </div>              </div>              <div className="overlay-bottom">                <PlayerControls />              </div>            </div>          </div>        </div>        <div className="feeds-sidebar">          <FeedSelector />          <FeedInfo />          <TechnicalInfo />        </div>      </div>      {}      <div className="mobile-feed-selector">        {cameraFeeds.map((feed, index) => (          <button            key={feed.id}            className={`mobile-feed-btn ${              selectedFeed === index ? "active" : ""            }`}            onClick={() => handleFeedSelect(index)}          >            <feed.icon size={16} />            <span>{feed.name.split(" ")[0]}</span>          </button>        ))}      </div>    </div>  );};export default LiveFeeds;
+import React, { useState } from "react";
+import YouTube from "react-youtube";
+import { motion } from "framer-motion";
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize2,
+  Minimize2,
+  RotateCw,
+  Settings,
+  Globe,
+  Satellite,
+} from "lucide-react";
+
+const LiveFeeds = () => {
+  const [selectedFeed, setSelectedFeed] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+const cameraFeeds = [
+  {
+    id: "iss-hdev",
+    name: "ISS HD Earth Viewing (Official NASA Stream)",
+    url: "iYmvCUonukw",
+    icon: Globe,
+  },
+  {
+    id: "nasa-tv",
+    name: "NASA TV: Live ISS Mission Broadcast",
+    url: "yf5cEJULZXk",
+    icon: Satellite,
+  },
+  {
+    id: "earth-observation",
+    name: "Earth Observation Camera: Live ISS View",
+    url: "fO9e9jnhYK8",
+    icon: Globe,
+  },
+  {
+    id: "alternate-earth-view",
+    name: "ISS Alternate Earth Live Feed",
+    url: "wQE_pVfv5nA",
+    icon: Globe,
+  },
+];
+
+
+  const currentFeed = cameraFeeds[selectedFeed];
+
+  const handleFeedSelect = (index) => {
+    setSelectedFeed(index);
+    setIsPlaying(true);
+    setIsMuted(true);
+  };
+
+  const togglePlay = () => setIsPlaying((prev) => !prev);
+  const toggleMute = () => setIsMuted((prev) => !prev);
+
+  const toggleFullscreen = () => {
+    const wrapper = document.querySelector(".main-player-wrapper");
+    if (!document.fullscreenElement) {
+      wrapper?.requestFullscreen?.();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen?.();
+      setIsFullscreen(false);
+    }
+  };
+
+  const opts = {
+    width: "100%",
+    height: "100%",
+    playerVars: {
+      autoplay: 1,
+      controls: 0,
+      mute: isMuted ? 1 : 0,
+      rel: 0,
+      modestbranding: 1,
+      enablejsapi: 1,
+      playsinline: 1,
+    },
+  };
+
+  const FeedSelector = () => (
+    <div className="feed-selector">
+      <h3>Available Camera Feeds</h3>
+      <div className="feed-grid">
+        {cameraFeeds.map((feed, index) => {
+          const IconComponent = feed.icon;
+          const isActive = selectedFeed === index;
+          return (
+            <motion.div
+              key={feed.id}
+              className={`feed-card ${isActive ? "active" : ""}`}
+              onClick={() => handleFeedSelect(index)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className="feed-icon">
+                <IconComponent size={24} />
+              </div>
+              <div className="feed-info">
+                <h4>{feed.name}</h4>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const PlayerControls = () => (
+    <div
+      className="player-controls"
+      style={{
+        display: "flex",
+        gap: "10px",
+        position: "absolute",
+        bottom: "10px",
+        left: "10px",
+        zIndex: 10,
+      }}
+    >
+      <button onClick={togglePlay} title={isPlaying ? "Pause" : "Play"}>
+        {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+      </button>
+      <button onClick={toggleMute} title={isMuted ? "Unmute" : "Mute"}>
+        {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+      </button>
+      <button onClick={toggleFullscreen} title="Fullscreen">
+        {isFullscreen ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
+      </button>
+      <button onClick={() => window.location.reload()} title="Refresh">
+        <RotateCw size={20} />
+      </button>
+      <button title="Settings">
+        <Settings size={20} />
+      </button>
+    </div>
+  );
+
+  return (
+    <div className={`live-feeds-container ${isFullscreen ? "fullscreen" : ""}`}>
+      <h2>ISS Live Camera Feeds</h2>
+      <div className="feeds-content" style={{ display: "flex", gap: "20px" }}>
+        {/* Main Player */}
+        <div className="main-player-wrapper" style={{ flex: 2, position: "relative" }}>
+          <div
+            className="main-player"
+            style={{
+              position: "relative",
+              width: "100%",
+              paddingTop: "56.25%", // 16:9 aspect ratio
+            }}
+          >
+            <YouTube
+              videoId={currentFeed.url}
+              opts={opts}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+              }}
+              onReady={(e) => {
+                if (isPlaying) e.target.playVideo();
+              }}
+            />
+            <PlayerControls />
+          </div>
+        </div>
+
+        {/* Sidebar */}
+        <div className="feeds-sidebar" style={{ flex: 1 }}>
+          <FeedSelector />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LiveFeeds;
