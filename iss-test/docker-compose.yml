@@ -1,6 +1,3 @@
-# Redis Cache Server for NASA ISS Tracker
-# This sets up a simple Express server with Redis caching for chatbot responses
-
 version: '3.8'
 
 services:
