@@ -1,0 +1,27 @@
+{
+  "name": "iss-redis-cache-server",
+  "version": "1.0.0",
+  "description": "Redis-powered cache server for NASA ISS chatbot responses",
+  "main": "redis-cache-server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node redis-cache-server.js",
+    "dev": "nodemon redis-cache-server.js",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": ["redis", "cache", "nasa", "iss", "chatbot", "api"],
+  "author": "NASA ISS Tracker",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "redis": "^4.6.10",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
