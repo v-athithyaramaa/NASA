@@ -8,6 +8,7 @@ import {
   Camera,
   Command,
   BarChart3,
+  Gamepad2,
   Settings as SettingsIcon,
 } from "lucide-react";
 import ISSCommandCenter from "./components/ISSCommandCenter";
@@ -17,12 +18,14 @@ import NasaChatbot from "./components/NasaChatbot";
 import CrewInfo from "./components/CrewInfo";
 import LiveFeeds from "./components/LiveFeeds";
 import TLEAnalysis from "./components/TLEAnalysis";
+import InteractiveGames from "./components/InteractiveGames";
 import Settings from "./components/Settings";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 const Header = ({ activePage, setActivePage, onSettingsClick }) => {
   const navItems = [
     { id: "command", icon: Command, label: "Command Center" },
+    { id: "games", icon: Gamepad2, label: "Training Games" },
     { id: "tracker", icon: Globe, label: "ISS Tracker" },
     { id: "crew", icon: Users, label: "Crew Info" },
     { id: "feeds", icon: Camera, label: "Live Feeds" },
@@ -87,6 +90,8 @@ export default function App() {
     switch (activePage) {
       case "command":
         return <ISSCommandCenter />;
+      case "games":
+        return <InteractiveGames />;
       case "tracker":
         return <ISSTracker />;
       case "crew":
