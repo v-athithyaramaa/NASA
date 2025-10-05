@@ -534,83 +534,89 @@ const BuoyancyGame = ({ gameId, onComplete, soundEnabled }) => {
   if (gameState === "setup") {
     return (
       <div className="buoyancy-game">
-        <div className="setup-phase">
-          <h3>🌊 Neutral Buoyancy Configuration</h3>
-          <p>
-            Balance your equipment to achieve neutral buoyancy (target: -8 to
-            +8)
-          </p>
+        <div className="buoyancy-instructions-card">
+          <div className="buoyancy-header-row">
+            <span className="buoyancy-icon">🌊</span>
+            <div>
+              <h2 className="buoyancy-title">Neutral Buoyancy Configuration</h2>
+              <div className="buoyancy-subtitle">Balance your equipment to achieve <b>neutral buoyancy</b> <span className="target-range">(target: -8 to +8)</span></div>
+            </div>
+          </div>
 
-          <div className={`buoyancy-display ${buoyancyStatus}`}>
-            <div className="buoyancy-meter">
-              <div className="meter-bar">
-                <div
-                  className="meter-fill"
-                  style={{
-                    width: `${Math.min(100, Math.abs(buoyancy) * 2)}%`,
-                    backgroundColor: isReady ? "#4ecdc4" : "#ff6b6b",
-                  }}
-                />
-              </div>
-              <div className="buoyancy-value">
-                Buoyancy: {buoyancy > 0 ? "+" : ""}
-                {buoyancy}
-                <span className="status">({buoyancyStatus})</span>
+          <div className="buoyancy-section">
+            <div className={`buoyancy-display ${buoyancyStatus}`}> 
+              <div className="buoyancy-meter">
+                <div className="meter-bar">
+                  <div
+                    className="meter-fill"
+                    style={{
+                      width: `${Math.min(100, Math.abs(buoyancy) * 2)}%`,
+                      backgroundColor: isReady ? "#4ecdc4" : "#ff6b6b",
+                    }}
+                  />
+                </div>
+                <div className="buoyancy-value">
+                  Buoyancy: <span className={`buoyancy-number ${buoyancyStatus}`}>{buoyancy > 0 ? "+" : ""}{buoyancy}</span>
+                  <span className="status">({buoyancyStatus})</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="equipment-controls">
-            <div className="control-section">
-              <h4>⚖️ Weights (-12 each, Max 4)</h4>
-              <div className="control-buttons">
-                <button onClick={addWeight} disabled={weights.length >= 4}>
-                  Add Weight ({weights.length}/4)
+          <div className="buoyancy-section equipment-section">
+            <div className="equipment-row">
+              <div className="equipment-card">
+                <div className="equipment-header">
+                  <span className="equipment-icon">⚖️</span>
+                  <span className="equipment-title">Weights</span>
+                  <span className="equipment-desc">-12 each, Max 4</span>
+                </div>
+                <button className="equipment-btn" onClick={addWeight} disabled={weights.length >= 4}>
+                  Add Weight <span className="equipment-count">({weights.length}/4)</span>
                 </button>
+                <div className="items-display">
+                  {weights.map((weight) => (
+                    <motion.div
+                      key={weight.id}
+                      className="item weight-item"
+                      whileHover={{ scale: 1.1 }}
+                      onClick={() => removeWeight(weight.id)}
+                    >
+                      ⚖️
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-              <div className="items-display">
-                {weights.map((weight) => (
-                  <motion.div
-                    key={weight.id}
-                    className="item weight-item"
-                    whileHover={{ scale: 1.1 }}
-                    onClick={() => removeWeight(weight.id)}
-                  >
-                    ⚖️
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-
-            <div className="control-section">
-              <h4>🎈 Buoyancy Aids (+15 each, Max 4)</h4>
-              <div className="control-buttons">
-                <button onClick={addFloatie} disabled={floaties.length >= 4}>
-                  Add Floatie ({floaties.length}/4)
+              <div className="equipment-card">
+                <div className="equipment-header">
+                  <span className="equipment-icon">🎈</span>
+                  <span className="equipment-title">Buoyancy Aids</span>
+                  <span className="equipment-desc">+15 each, Max 4</span>
+                </div>
+                <button className="equipment-btn" onClick={addFloatie} disabled={floaties.length >= 4}>
+                  Add Floatie <span className="equipment-count">({floaties.length}/4)</span>
                 </button>
-              </div>
-              <div className="items-display">
-                {floaties.map((floatie) => (
-                  <motion.div
-                    key={floatie.id}
-                    className="item floatie-item"
-                    whileHover={{ scale: 1.1 }}
-                    onClick={() => removeFloatie(floatie.id)}
-                  >
-                    🎈
-                  </motion.div>
-                ))}
+                <div className="items-display">
+                  {floaties.map((floatie) => (
+                    <motion.div
+                      key={floatie.id}
+                      className="item floatie-item"
+                      whileHover={{ scale: 1.1 }}
+                      onClick={() => removeFloatie(floatie.id)}
+                    >
+                      🎈
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="mission-objectives">
-            <h4>Mission Objectives:</h4>
-            <ul>
+          <div className="buoyancy-section objectives-section">
+            <h3 className="objectives-title">Mission Objectives</h3>
+            <ul className="objectives-list">
               {tasks.map((task) => (
-                <li key={task.id}>
-                  {task.icon} {task.name}
-                </li>
+                <li key={task.id} className="objective-item">{task.icon} {task.name}</li>
               ))}
             </ul>
           </div>
@@ -1081,81 +1087,42 @@ const SpacewalkRepairGame = ({ gameId, onComplete, soundEnabled }) => {
 
   if (gameState === "briefing") {
     return (
-      <div className="spacewalk-briefing">
-        <motion.div
-          className="mission-brief"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3>🚨 Critical Systems Failure - Emergency EVA Required</h3>
-          <div className="alert-banner">
+      <div className="mission-instructions-card">
+        <h2>🚨 Emergency EVA: ISS Repair Mission</h2>
+        <div className="mission-section">
+          <div className="alert-banner-pro">
             <AlertTriangle size={24} />
-            Multiple ISS systems have failed. Immediate repair is essential for
-            crew safety.
+            <span>Multiple ISS systems have failed. Immediate repair is essential for crew safety.</span>
           </div>
-
-          <div className="systems-overview">
-            <h4>System Status Report:</h4>
-            {systems.map((system) => {
-              const { color, priority } = getSystemPriority(system.status);
-              return (
-                <div
-                  key={system.id}
-                  className="system-brief"
-                  style={{ borderLeft: `4px solid ${color}` }}
-                >
-                  <div className="system-header">
-                    <span className="system-name">{system.name}</span>
-                    <span
-                      className="priority-badge"
-                      style={{ backgroundColor: color }}
-                    >
-                      {priority}
-                    </span>
-                  </div>
-                  <div className="system-details">
-                    <div>Required Tools: {system.requiredTools.join(", ")}</div>
-                    <div>Steps: {system.steps.length}</div>
-                    <div>Difficulty: {"⭐".repeat(system.difficulty)}</div>
-                  </div>
-                </div>
-              );
-            })}
+        </div>
+        <div className="mission-section">
+          <h3>System Status Report</h3>
+          <div className="systems-list">
+            {systems.map(system => (
+              <div className="system-row" key={system.id}>
+                <span className={`status-badge-pro ${system.status.toLowerCase()}`}>{system.status}</span>
+                <span className="system-name-pro">{system.name}</span>
+                <span className="tools-pro">{system.requiredTools.join(", ")}</span>
+                <span className="steps-pro">{system.steps.length} steps</span>
+                <span className="difficulty-pro">{'⭐'.repeat(system.difficulty)}</span>
+              </div>
+            ))}
           </div>
-
-          <div className="mission-parameters">
-            <h4>Mission Parameters:</h4>
-            <div className="parameter-grid">
-              <div className="parameter">
-                <Clock size={20} />
-                <span>
-                  Time Limit: {Math.floor(GAME_DURATION_SEC[gameId] / 60)}{" "}
-                  minutes
-                </span>
-              </div>
-              <div className="parameter">
-                <Battery size={20} />
-                <span>Suit Power: Limited</span>
-              </div>
-              <div className="parameter">
-                <Shield size={20} />
-                <span>Tether Safety: Critical</span>
-              </div>
-            </div>
+        </div>
+        <div className="mission-section">
+          <h3>Mission Parameters</h3>
+          <div className="parameters-pro">
+            <span><Clock size={18}/> Time Limit: {Math.floor(GAME_DURATION_SEC[gameId] / 60)} minutes</span>
+            <span><Battery size={18}/> Suit Power: Limited</span>
+            <span><Shield size={18}/> Tether Safety: Critical</span>
           </div>
-
-          <button
-            className="begin-eva-btn"
-            onClick={() => {
-              setGameState("active");
-              playSound("success", soundEnabled);
-            }}
-          >
-            <Rocket size={20} />
-            Begin Emergency EVA
-          </button>
-        </motion.div>
+        </div>
+        <button className="eva-btn-pro" onClick={() => {
+          setGameState("active");
+          playSound("success", soundEnabled);
+        }}>
+          <Rocket size={20}/> Begin Emergency EVA
+        </button>
       </div>
     );
   }
@@ -1747,75 +1714,42 @@ const LunarCollectionGame = ({ gameId, onComplete, soundEnabled }) => {
 
   if (gameState === "preparation") {
     return (
-      <div className="lunar-preparation">
-        <motion.div
-          className="mission-prep"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3>🌙 Lunar Sample Collection Mission</h3>
-          <div className="mission-briefing">
-            <div className="briefing-header">
-              <Map size={24} />
-              <span>
-                Mission Objective: Collect valuable lunar samples for scientific
-                research
-              </span>
-            </div>
-
-            <div className="sample-catalog">
-              <h4>Sample Types Available:</h4>
-              <div className="samples-grid">
-                {samples.map((sample) => (
-                  <div key={sample.id} className="sample-info">
-                    <span className="sample-icon">{sample.icon}</span>
-                    <div className="sample-details">
-                      <div className="sample-name">{sample.name}</div>
-                      <div className="sample-value">{sample.value} pts</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mission-parameters">
-              <h4>Mission Parameters:</h4>
-              <div className="params-grid">
-                <div className="param-item">
-                  <span className="param-label">Gravity:</span>
-                  <span className="param-value">16.6% of Earth</span>
-                </div>
-                <div className="param-item">
-                  <span className="param-label">Target Samples:</span>
-                  <span className="param-value">Minimum 4/6</span>
-                </div>
-                <div className="param-item">
-                  <span className="param-label">Movement:</span>
-                  <span className="param-value">WASD + Space (Jump)</span>
-                </div>
-                <div className="param-item">
-                  <span className="param-label">Time Limit:</span>
-                  <span className="param-value">
-                    {Math.floor(GAME_DURATION_SEC[gameId] / 60)} minutes
-                  </span>
-                </div>
-              </div>
-            </div>
+      <div className="lunar-instructions-card">
+        <h2>🌙 Lunar Sample Collection Mission</h2>
+        <div className="lunar-section">
+          <div className="lunar-brief-pro">
+            <Map size={24} />
+            <span>Mission Objective: Collect valuable lunar samples for scientific research</span>
           </div>
-
-          <button
-            className="begin-collection-btn"
-            onClick={() => {
-              setGameState("exploring");
-              playSound("success", soundEnabled);
-              lastTimeRef.current = Date.now();
-            }}
-          >
-            <Rocket size={20} />
-            Begin Lunar Exploration
-          </button>
-        </motion.div>
+        </div>
+        <div className="lunar-section">
+          <h3>Sample Types Available</h3>
+          <div className="lunar-samples-list">
+            {samples.map(sample => (
+              <div className="lunar-sample-row" key={sample.id}>
+                <span className="lunar-sample-icon">{sample.icon}</span>
+                <span className="lunar-sample-name">{sample.name}</span>
+                <span className="lunar-sample-value">{sample.value} pts</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="lunar-section">
+          <h3>Mission Parameters</h3>
+          <div className="lunar-parameters-pro">
+            <span>🌑 Gravity: 16.6% of Earth</span>
+            <span>🎯 Target Samples: Minimum 4/6</span>
+            <span>⌨️ Movement: WASD + Space (Jump)</span>
+            <span><Clock size={18}/> Time Limit: {Math.floor(GAME_DURATION_SEC[gameId] / 60)} minutes</span>
+          </div>
+        </div>
+        <button className="lunar-btn-pro" onClick={() => {
+          setGameState("exploring");
+          playSound("success", soundEnabled);
+          lastTimeRef.current = Date.now();
+        }}>
+          <Rocket size={20}/> Begin Lunar Exploration
+        </button>
       </div>
     );
   }
@@ -2369,10 +2303,14 @@ const EquipmentInstallGame = ({ gameId, onComplete, soundEnabled }) => {
       100 -
       Math.sqrt(Math.pow(dropX - targetX, 2) + Math.pow(dropY - targetY, 2));
 
-    const isAccurate = accuracy >= currentModule.precision;
+    // Snap radius in percent (e.g., 10% of diagram width/height)
+    const snapRadius = 10;
+    const isNearTarget =
+      Math.abs(dropX - targetX) <= snapRadius &&
+      Math.abs(dropY - targetY) <= snapRadius;
 
-    if (isAccurate) {
-
+    if (isNearTarget) {
+      // Snap to target
       setModules((prev) =>
         prev.map((m) => {
           if (m.id === currentModule.id) {
@@ -2417,7 +2355,6 @@ const EquipmentInstallGame = ({ gameId, onComplete, soundEnabled }) => {
         }, 1000);
       }
     } else {
-
       setScore((prev) => Math.max(0, prev - 100));
       setPrecisionLevel((prev) => Math.max(30, prev - 5));
       playSound("error", soundEnabled);
@@ -2446,74 +2383,42 @@ const EquipmentInstallGame = ({ gameId, onComplete, soundEnabled }) => {
 
   if (gameState === "briefing") {
     return (
-      <div className="installation-briefing">
-        <motion.div
-          className="briefing-content"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3>🔧 Precision Equipment Installation</h3>
-          <div className="mission-overview">
-            <div className="overview-header">
-              <Settings size={24} />
-              <span>
-                Mission: Install critical station modules with extreme precision
-              </span>
-            </div>
-
-            <div className="modules-list">
-              <h4>Installation Queue:</h4>
-              {modules.map((module) => (
-                <div key={module.id} className="module-preview">
-                  <div className="module-header">
-                    <span className="module-name">{module.name}</span>
-                    <span className="difficulty">
-                      Difficulty: {"⭐".repeat(module.difficulty)}
-                    </span>
-                  </div>
-                  <div className="module-specs">
-                    <span>Components: {module.components.length}</span>
-                    <span>Precision Required: {module.precision}%</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="installation-requirements">
-              <h4>Installation Requirements:</h4>
-              <div className="requirements-grid">
-                <div className="requirement">
-                  <Crosshair size={20} />
-                  <span>Extreme precision required (95%+ accuracy)</span>
-                </div>
-                <div className="requirement">
-                  <MousePointer size={20} />
-                  <span>Drag and drop components to exact positions</span>
-                </div>
-                <div className="requirement">
-                  <Timer size={20} />
-                  <span>Work quickly - precision degrades over time</span>
-                </div>
-                <div className="requirement">
-                  <Target size={20} />
-                  <span>Perfect alignment earns maximum points</span>
-                </div>
-              </div>
-            </div>
+      <div className="install-instructions-card">
+        <h2>🔧 Precision Equipment Installation</h2>
+        <div className="install-section">
+          <div className="install-brief-pro">
+            <Settings size={24} />
+            <span>Mission: Install critical station modules with extreme precision</span>
           </div>
-
-          <button
-            className="begin-installation-btn"
-            onClick={() => {
-              setGameState("installing");
-              playSound("success", soundEnabled);
-            }}
-          >
-            <Settings size={20} />
-            Begin Installation Sequence
-          </button>
-        </motion.div>
+        </div>
+        <div className="install-section">
+          <h3>Installation Queue</h3>
+          <div className="install-queue-list">
+            {modules.map(module => (
+              <div className="install-queue-row" key={module.id}>
+                <span className="install-module-name">{module.name}</span>
+                <span className="install-difficulty">{'⭐'.repeat(module.difficulty)}</span>
+                <span className="install-specs">Components: {module.components.length}</span>
+                <span className="install-specs">Precision: {module.precision}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="install-section">
+          <h3>Installation Requirements</h3>
+          <div className="install-req-list">
+            <div className="install-req-row"><Crosshair size={20}/> Extreme precision required (95%+ accuracy)</div>
+            <div className="install-req-row"><MousePointer size={20}/> Drag and drop components to exact positions</div>
+            <div className="install-req-row"><Timer size={20}/> Work quickly - precision degrades over time</div>
+            <div className="install-req-row"><Target size={20}/> Perfect alignment earns maximum points</div>
+          </div>
+        </div>
+        <button className="install-btn-pro" onClick={() => {
+          setGameState("installing");
+          playSound("success", soundEnabled);
+        }}>
+          <Rocket size={20}/> Begin Installation Sequence
+        </button>
       </div>
     );
   }
@@ -2617,7 +2522,7 @@ const EquipmentInstallGame = ({ gameId, onComplete, soundEnabled }) => {
                       .map((component) => (
                         <div
                           key={`installed-${component.id}`}
-                          className="installed-component"
+                          className={`installed-component${component.snapFlash ? ' snap-flash' : ''}`}
                           style={{
                             left: `${component.x}%`,
                             top: `${component.y}%`,
@@ -3178,66 +3083,45 @@ const EmergencyResponseGame = ({ gameId, onComplete, soundEnabled }) => {
     return (
       <div className="emergency-briefing">
         <motion.div
-          className="briefing-content"
+          className="emergency-briefing-card"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h3>🚨 Emergency Response Command Training</h3>
-          <div className="command-overview">
-            <div className="overview-header">
-              <AlertTriangle size={24} />
-              <span>
-                You are the Mission Commander. Critical decisions await.
-              </span>
+          <div className="emergency-header-row">
+            <span className="emergency-icon"><AlertTriangle size={32} /></span>
+            <div>
+              <h2 className="emergency-title">Emergency Response Command Training</h2>
+              <div className="emergency-subtitle">You are the <b>Mission Commander</b>. Critical decisions await.</div>
             </div>
+          </div>
 
-            <div className="emergency-scenarios">
-              <h4>Potential Emergency Scenarios:</h4>
+          <div className="emergency-section">
+            <h3 className="section-title">Potential Emergency Scenarios</h3>
+            <div className="emergency-scenarios-list">
               {emergencies.map((emergency) => (
-                <div key={emergency.id} className="scenario-preview">
-                  <div className="scenario-header">
-                    <span className="scenario-name">{emergency.name}</span>
-                    <span
-                      className="severity-badge"
-                      style={{
-                        backgroundColor: getSeverityColor(emergency.severity),
-                      }}
-                    >
-                      {emergency.severity.toUpperCase()}
-                    </span>
+                <div key={emergency.id} className="scenario-card">
+                  <div className="scenario-card-header">
+                    <span className="scenario-card-name">{emergency.name}</span>
+                    <span className={`scenario-severity-badge ${emergency.severity.toLowerCase()}`}>{emergency.severity.toUpperCase()}</span>
                   </div>
-                  <div className="scenario-description">
-                    {emergency.description}
-                  </div>
-                  <div className="scenario-timing">
-                    Response Time: {Math.floor(emergency.timeLimit / 60)}:
-                    {(emergency.timeLimit % 60).toString().padStart(2, "0")}
+                  <div className="scenario-card-desc">{emergency.description}</div>
+                  <div className="scenario-card-timer">
+                    <Clock size={16} style={{ marginRight: 4, verticalAlign: "middle" }} />
+                    {Math.floor(emergency.timeLimit / 60)}:{(emergency.timeLimit % 60).toString().padStart(2, "0")} <span className="timer-label">Response Time</span>
                   </div>
                 </div>
               ))}
             </div>
+          </div>
 
-            <div className="command-principles">
-              <h4>Command Principles:</h4>
-              <div className="principles-grid">
-                <div className="principle">
-                  <Shield size={20} />
-                  <span>Crew safety is the highest priority</span>
-                </div>
-                <div className="principle">
-                  <Clock size={20} />
-                  <span>Time pressure affects decision quality</span>
-                </div>
-                <div className="principle">
-                  <Activity size={20} />
-                  <span>Stress management is crucial</span>
-                </div>
-                <div className="principle">
-                  <Target size={20} />
-                  <span>Quick, informed decisions save lives</span>
-                </div>
-              </div>
+          <div className="emergency-section">
+            <h3 className="section-title">Command Principles</h3>
+            <div className="principles-list">
+              <div className="principle-item"><Shield size={18} /> <span>Crew safety is the highest priority</span></div>
+              <div className="principle-item"><Clock size={18} /> <span>Time pressure affects decision quality</span></div>
+              <div className="principle-item"><Activity size={18} /> <span>Stress management is crucial</span></div>
+              <div className="principle-item"><Target size={18} /> <span>Quick, informed decisions save lives</span></div>
             </div>
           </div>
 

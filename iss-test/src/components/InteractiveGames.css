@@ -1,3 +1,166 @@
+.buoyancy-instructions-card {
+  background: rgba(0, 30, 60, 0.92);
+  border: 2px solid var(--primary-color);
+  border-radius: 18px;
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+  max-width: 600px;
+  margin: 2.5rem auto 0 auto;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+.buoyancy-header-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.buoyancy-icon {
+  font-size: 2.2rem;
+  color: #4ecdc4;
+  background: rgba(78,205,196,0.08);
+  border-radius: 50%;
+  padding: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.buoyancy-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.1rem;
+}
+.buoyancy-subtitle {
+  font-size: 1.05rem;
+  color: #e6e6e6;
+  opacity: 0.92;
+}
+.target-range {
+  color: #4ecdc4;
+  font-weight: 600;
+  margin-left: 0.3em;
+}
+.buoyancy-section {
+  margin-bottom: 0.2rem;
+}
+.buoyancy-number.neutral {
+  color: #4ecdc4;
+  font-weight: 700;
+}
+.buoyancy-number.floating {
+  color: #54a0ff;
+  font-weight: 700;
+}
+.buoyancy-number.sinking {
+  color: #ff6b6b;
+  font-weight: 700;
+}
+.equipment-section {
+  margin-top: 1.2rem;
+}
+.equipment-row {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.equipment-card {
+  background: rgba(0, 20, 40, 0.7);
+  border: 1.5px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 1.1rem 1.2rem 0.8rem 1.2rem;
+  flex: 1 1 220px;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.equipment-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+.equipment-icon {
+  font-size: 1.3rem;
+}
+.equipment-title {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+.equipment-desc {
+  color: #bdbdbd;
+  font-size: 0.95em;
+  margin-left: 0.5em;
+}
+.equipment-btn {
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(45deg, #4ecdc4, #48dbfb);
+  color: #003344;
+  margin-bottom: 0.3rem;
+  transition: background 0.2s;
+}
+.equipment-btn:disabled {
+  background: #222e3a;
+  color: #888;
+  opacity: 0.7;
+}
+.equipment-count {
+  color: #4ecdc4;
+  font-weight: 700;
+  margin-left: 0.2em;
+}
+.objectives-section {
+  margin-top: 1.2rem;
+}
+.objectives-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  margin-bottom: 0.7rem;
+  letter-spacing: 0.01em;
+}
+.objectives-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.objective-item {
+  background: rgba(0, 30, 60, 0.6);
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: #e6f7ff;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.snap-flash {
+  animation: snapScale 0.25s cubic-bezier(.4,2,.6,1);
+}
+
+@keyframes snapScale {
+  0% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 .interactive-games {
   min-height: 100vh;
   background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #16213e 100%);
@@ -944,6 +1107,107 @@
   color: var(--primary-color);
 }
 
+/* --- Professional ISS Repair Mission Instructions UI --- */
+.mission-instructions-card {
+  max-width: 600px;
+  margin: 2.5rem auto;
+  background: rgba(10, 20, 40, 0.97);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  color: #e6f7ff;
+  border: 2px solid var(--primary-color);
+  animation: fadeInCard 0.7s cubic-bezier(.4,1.4,.6,1) 1;
+}
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.mission-instructions-card h2 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  margin-bottom: 1.2rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.mission-section {
+  margin-bottom: 1.6rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.alert-banner-pro {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: rgba(255, 107, 107, 0.13);
+  color: #ff6b6b;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 12px rgba(255,107,107,0.07);
+}
+.systems-list {
+  display: grid;
+  gap: 0.7rem;
+}
+.system-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 1.2fr 0.8fr 0.8fr;
+  align-items: center;
+  background: rgba(0, 30, 60, 0.7);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1.05rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+}
+.status-badge-pro {
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.13);
+}
+.status-badge-pro.high { background: #ff6b6b; }
+.status-badge-pro.medium { background: #feca57; color: #222; }
+.status-badge-pro.low { background: #96ceb4; color: #222; }
+.system-name-pro { font-weight: 700; }
+.tools-pro { color: #cbe7ff; font-size: 0.98rem; }
+.steps-pro { color: #85d4a3; font-size: 0.98rem; }
+.difficulty-pro { color: #ff9ff3; font-size: 1.1rem; letter-spacing: 1px; }
+.parameters-pro {
+  display: flex;
+  gap: 1.2rem;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+.eva-btn-pro {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 1.1rem 0;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #45b7d1, #96ceb4);
+  color: #0a1a2e;
+  font-size: 1.2rem;
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(69,183,209,0.15);
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+.eva-btn-pro:hover {
+  background: linear-gradient(90deg, #96ceb4, #45b7d1);
+}
+/* --- End Professional UI --- */
+
 @media (max-width: 1200px) {
   .games-grid {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -1580,11 +1844,18 @@
   border-radius: 12px;
   background: rgba(0, 20, 40, 0.5);
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .assembly-grid {
   position: relative;
   width: 100%;
   height: 100%;
+  transform: scale(1.8) translateX(7.5%);
+  transform-origin: center center;
+  transition: transform 0.3s;
+  margin: auto;
 }
 .target-position {
   position: absolute;
@@ -1683,13 +1954,130 @@
   border-radius: 8px;
 }
 
-.emergency-briefing .briefing-content,
-.installation-briefing .briefing-content,
-.lunar-preparation .mission-prep {
-  background: rgba(0, 30, 60, 0.8);
+
+.emergency-briefing-card {
+  background: rgba(0, 30, 60, 0.92);
   border: 2px solid var(--primary-color);
-  border-radius: 16px;
-  padding: 1.2rem;
+  border-radius: 18px;
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+  max-width: 600px;
+  margin: 2.5rem auto 0 auto;
+  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.emergency-header-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.emergency-icon {
+  color: #ff6b6b;
+  background: rgba(255,107,107,0.08);
+  border-radius: 50%;
+  padding: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.emergency-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 0.1rem;
+}
+.emergency-subtitle {
+  font-size: 1.05rem;
+  color: #e6e6e6;
+  opacity: 0.92;
+}
+
+.emergency-section {
+  margin-bottom: 0.2rem;
+}
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--secondary-color);
+  margin-bottom: 0.7rem;
+  letter-spacing: 0.01em;
+}
+.emergency-scenarios-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.scenario-card {
+  background: rgba(0, 20, 40, 0.7);
+  border: 1.5px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem 0.7rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.scenario-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.1rem;
+}
+.scenario-card-name {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.02rem;
+}
+.scenario-severity-badge {
+  padding: 0.18rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  background: #888;
+}
+.scenario-severity-badge.critical {
+  background: linear-gradient(45deg, #ff6b6b, #ee5253);
+}
+.scenario-severity-badge.high {
+  background: linear-gradient(45deg, #feca57, #ff9ff3);
+  color: #2d2d2d;
+}
+.scenario-severity-badge.medium {
+  background: linear-gradient(45deg, #54a0ff, #48dbfb);
+}
+.scenario-card-desc {
+  color: #e6f7ff;
+  font-size: 0.97rem;
+  margin-bottom: 0.1rem;
+}
+.scenario-card-timer {
+  color: #feca57;
+  font-size: 0.93rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.timer-label {
+  color: #bdbdbd;
+  font-size: 0.85em;
+  margin-left: 0.2em;
+}
+
+.principles-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.principle-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #e6e6e6;
+  font-size: 1rem;
 }
 
 .command-overview .overview-header,
@@ -2048,3 +2436,202 @@
   border-radius: 10px;
   color: #cbe7ff;
 }
+
+/* --- Professional Lunar Collection Mission Instructions UI --- */
+.lunar-instructions-card {
+  max-width: 600px;
+  margin: 2.5rem auto;
+  background: rgba(20, 24, 40, 0.98);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  color: #e6f7ff;
+  border: 2px solid var(--primary-color);
+  animation: fadeInCard 0.7s cubic-bezier(.4,1.4,.6,1) 1;
+}
+.lunar-instructions-card h2 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #ffe066;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.lunar-section {
+  margin-bottom: 1.6rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.lunar-brief-pro {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: rgba(255, 224, 102, 0.13);
+  color: #ffe066;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 12px rgba(255,224,102,0.07);
+}
+.lunar-samples-list {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 0.7rem;
+}
+.lunar-sample-row {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 30, 60, 0.7);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1.05rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  gap: 0.8rem;
+}
+.lunar-sample-icon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+.lunar-sample-name {
+  font-weight: 700;
+  color: #ffe066;
+}
+.lunar-sample-value {
+  color: #85d4a3;
+  font-size: 1.05rem;
+  margin-left: auto;
+}
+.lunar-parameters-pro {
+  display: flex;
+  gap: 1.2rem;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+.lunar-btn-pro {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 1.1rem 0;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ffe066, #45b7d1);
+  color: #0a1a2e;
+  font-size: 1.2rem;
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(255,224,102,0.15);
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+.lunar-btn-pro:hover {
+  background: linear-gradient(90deg, #45b7d1, #ffe066);
+}
+/* --- End Professional Lunar UI --- */
+
+/* --- Professional Equipment Installation Mission Instructions UI --- */
+.install-instructions-card {
+  max-width: 600px;
+  margin: 2.5rem auto;
+  background: rgba(24, 28, 48, 0.98);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  color: #e6f7ff;
+  border: 2px solid var(--primary-color);
+  animation: fadeInCard 0.7s cubic-bezier(.4,1.4,.6,1) 1;
+}
+.install-instructions-card h2 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #4ecdc4;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+.install-section {
+  margin-bottom: 1.6rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.install-brief-pro {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: rgba(78, 205, 196, 0.13);
+  color: #4ecdc4;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 12px rgba(78,205,196,0.07);
+}
+.install-queue-list {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+.install-queue-row {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 30, 60, 0.7);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 1.05rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+  gap: 0.8rem;
+}
+.install-module-name {
+  font-weight: 700;
+  color: #4ecdc4;
+}
+.install-difficulty {
+  color: #ff9ff3;
+  font-size: 1.1rem;
+  margin-left: 1rem;
+}
+.install-specs {
+  margin-left: auto;
+  display: flex;
+  gap: 1.2rem;
+  font-size: 0.98rem;
+  color: #cbe7ff;
+}
+.install-req-list {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.7rem;
+}
+.install-req-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: #ffe066;
+  font-size: 1.05rem;
+}
+.install-btn-pro {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 1.1rem 0;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #4ecdc4, #ffe066);
+  color: #0a1a2e;
+  font-size: 1.2rem;
+  font-weight: 700;
+  box-shadow: 0 2px 12px rgba(78,205,196,0.15);
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+}
+.install-btn-pro:hover {
+  background: linear-gradient(90deg, #ffe066, #4ecdc4);
+}
+/* --- End Professional Install UI --- */
