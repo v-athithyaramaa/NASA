@@ -1,8 +1,31 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, Satellite, Users, Activity, MapPin, Zap, Eye, Maximize2, Minimize2, RotateCcw, Play, Pause,  } from "lucide-react";
+import {
+  Globe,
+  Satellite,
+  Users,
+  Activity,
+  MapPin,
+  Zap,
+  Eye,
+  Maximize2,
+  Minimize2,
+  RotateCcw,
+  Play,
+  Pause,
+} from "lucide-react";
 
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement,  } from "chart.js";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
 import { issDataService } from "../services/ISSDataService";
 import ISSTracker3D from "./ISSTracker3D";
 import ISSWorldMap from "./ISSWorldMap";
@@ -253,15 +276,56 @@ const ISSCommandCenter = () => {
   };
   if (!issData) {
     return (
-      <div className="loading-container">
+      <div className="command-center-loading">
         <motion.div
-          className="loading-spinner"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          className="loading-content"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <Satellite size={48} />
+          <motion.div
+            className="loading-icon"
+            animate={{
+              rotate: 360,
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              rotate: { duration: 2, repeat: Infinity, ease: "linear" },
+              scale: { duration: 1.5, repeat: Infinity, ease: "easeInOut" },
+            }}
+          >
+            <Satellite size={48} />
+          </motion.div>
+          <h2>ISS Command Center</h2>
+          <p>Establishing connection to ISS...</p>
+          <div className="loading-steps">
+            <motion.div
+              className="step"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              📡 Connecting to satellite network
+            </motion.div>
+            <motion.div
+              className="step"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.0 }}
+            >
+              🌍 Acquiring ISS position data
+            </motion.div>
+            <motion.div
+              className="step"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5 }}
+            >
+              🚀 Loading mission parameters
+            </motion.div>
+          </div>
+          <div className="loading-spinner"></div>
         </motion.div>
-        <p>Loading ISS Command Center...</p>
       </div>
     );
   }
