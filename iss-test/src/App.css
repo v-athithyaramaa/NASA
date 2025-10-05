@@ -130,15 +130,24 @@ h3 {
 
 .nav-links {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  max-width: calc(100vw - 400px); /* Reserve space for logo and settings */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .nav-button {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
+  gap: 4px;
+  padding: 8px 10px;
   background: transparent;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -146,8 +155,10 @@ h3 {
   cursor: pointer;
   transition: all var(--transition-smooth);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
   letter-spacing: 0.5px;
 }
 
@@ -291,11 +302,16 @@ h3 {
 
 @media (max-width: 1200px) {
   .nav-links {
-    gap: 8px;
+    gap: 6px;
+    max-width: calc(100vw - 350px);
   }
   .nav-button {
-    padding: 8px 10px;
-    font-size: 0.85rem;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    gap: 3px;
+  }
+  .nav-button span {
+    display: none; /* Hide text on smaller screens, show only icons */
   }
 }
 
@@ -303,11 +319,17 @@ h3 {
   .nav-container {
     flex-direction: column;
     align-items: center;
+    padding: 1rem;
   }
   .nav-links {
     margin-top: 1rem;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 100%;
+    gap: 8px;
+  }
+  .nav-button span {
+    display: inline; /* Show text again on mobile when we have more space */
   }
   .settings-btn {
     margin-left: 0.5rem;
