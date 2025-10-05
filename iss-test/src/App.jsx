@@ -20,6 +20,7 @@ import LiveFeeds from "./components/LiveFeeds";
 import TLEAnalysis from "./components/TLEAnalysis";
 import InteractiveGames from "./components/InteractiveGames";
 import Settings from "./components/Settings";
+import ISSMap from "./components/ISSMap";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 const Header = ({ activePage, setActivePage, onSettingsClick }) => {
@@ -27,6 +28,7 @@ const Header = ({ activePage, setActivePage, onSettingsClick }) => {
     { id: "command", icon: Command, label: "Command Center" },
     { id: "games", icon: Gamepad2, label: "Training Games" },
     { id: "tracker", icon: Globe, label: "ISS Tracker" },
+    { id: "map", icon: Globe, label: "ISS Map" },
     { id: "crew", icon: Users, label: "Crew Info" },
     { id: "feeds", icon: Camera, label: "Live Feeds" },
     { id: "analysis", icon: BarChart3, label: "TLE Analysis" },
@@ -104,6 +106,8 @@ export default function App() {
         return <NasaHistory />;
       case "chatbot":
         return <NasaChatbot />;
+        case "map":
+        return <ISSMap />;
       default:
         return <ISSCommandCenter />;
     }
