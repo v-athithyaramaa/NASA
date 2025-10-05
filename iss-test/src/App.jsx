@@ -21,11 +21,13 @@ import TLEAnalysis from "./components/TLEAnalysis";
 import InteractiveGames from "./components/InteractiveGames";
 import Settings from "./components/Settings";
 import ISSMap from "./components/ISSMap";
+import CupolaScene from "./components/Cupola";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 const Header = ({ activePage, setActivePage, onSettingsClick }) => {
   const navItems = [
     { id: "command", icon: Command, label: "Command Center" },
+    {id: "cupola", icon: Satellite, label: "Cupola View" },
     { id: "games", icon: Gamepad2, label: "Training Games" },
     { id: "tracker", icon: Globe, label: "ISS Tracker" },
     { id: "map", icon: Globe, label: "ISS Map" },
@@ -92,6 +94,8 @@ export default function App() {
     switch (activePage) {
       case "command":
         return <ISSCommandCenter />;
+      case "cupola":
+        return <CupolaScene/>;
       case "games":
         return <InteractiveGames />;
       case "tracker":
