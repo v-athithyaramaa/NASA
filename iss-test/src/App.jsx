@@ -10,6 +10,7 @@ import {
   BarChart3,
   Gamepad2,
   Settings as SettingsIcon,
+  Waves,
 } from "lucide-react";
 import ISSCommandCenter from "./components/ISSCommandCenter";
 import ISSTracker from "./components/ISSTracker";
@@ -19,6 +20,7 @@ import CrewInfo from "./components/CrewInfo";
 import LiveFeeds from "./components/LiveFeeds";
 import TLEAnalysis from "./components/TLEAnalysis";
 import InteractiveGames from "./components/InteractiveGames";
+import NBLTrainingSimulator from "./components/NBLTrainingSimulator";
 import Settings from "./components/Settings";
 import ISSMap from "./components/ISSMap";
 import CupolaScene from "./components/Cupola";
@@ -29,6 +31,7 @@ const Header = ({ activePage, setActivePage, onSettingsClick }) => {
     { id: "command", icon: Command, label: "Command Center" },
     {id: "cupola", icon: Satellite, label: "Cupola View" },
     { id: "games", icon: Gamepad2, label: "Training Games" },
+    { id: "nbl", icon: Waves, label: "NBL Simulator" },
     { id: "tracker", icon: Globe, label: "ISS Tracker" },
     { id: "map", icon: Globe, label: "ISS Map" },
     { id: "crew", icon: Users, label: "Crew Info" },
@@ -80,7 +83,7 @@ const Footer = () => (
 export default function App() {
   const [activePage, setActivePage] = useState("command");
   const [showSettings, setShowSettings] = useState(false);
-  const [userPreferences, setUserPreferences] = useState({});
+  const [_userPreferences, setUserPreferences] = useState({});
   const handleSettingsClick = () => {
     setShowSettings(true);
   };
@@ -98,6 +101,8 @@ export default function App() {
         return <CupolaScene/>;
       case "games":
         return <InteractiveGames />;
+      case "nbl":
+        return <NBLTrainingSimulator />;
       case "tracker":
         return <ISSTracker />;
       case "crew":
@@ -110,7 +115,7 @@ export default function App() {
         return <NasaHistory />;
       case "chatbot":
         return <NasaChatbot />;
-        case "map":
+      case "map":
         return <ISSMap />;
       default:
         return <ISSCommandCenter />;
