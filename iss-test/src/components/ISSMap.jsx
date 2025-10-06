@@ -12,7 +12,7 @@ export default function ISSGlobe() {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/current-iss");
+        const res = await fetch("https://nasa-12-56gk.onrender.com/current-iss");
         if (!res.ok) throw new Error("Failed to fetch ISS position");
         const data = await res.json();
         setIssPosition({ lat: data.latitude, lng: data.longitude });
