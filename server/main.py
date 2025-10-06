@@ -43,7 +43,7 @@ class ISSLocation(BaseModel):
 
 origins = [
     "http://localhost:5173",  # React dev server
-    "http://127.0.0.1:5173",
+    "https://nasa-iss-space-surfers.vercel.app",
 ]
 
 app.add_middleware(
