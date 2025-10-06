@@ -1,4 +1,3 @@
-/* 1. GLOBAL VARIABLES AND BASE STYLES */
 @import "leaflet/dist/leaflet.css";
 
 :root {
@@ -73,8 +72,6 @@ h3 {
   letter-spacing: 0.05em;
 }
 
-/* 2. HEADER & NAVIGATION STYLES */
-
 .header {
   background: rgba(12, 21, 56, 0.95);
   backdrop-filter: blur(10px);
@@ -130,15 +127,24 @@ h3 {
 
 .nav-links {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  max-width: calc(100vw - 400px);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;
 }
 
 .nav-button {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
+  gap: 4px;
+  padding: 8px 10px;
   background: transparent;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -146,8 +152,10 @@ h3 {
   cursor: pointer;
   transition: all var(--transition-smooth);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
   letter-spacing: 0.5px;
 }
 
@@ -193,8 +201,6 @@ h3 {
   width: 100%;
 }
 
-/* 3. FOOTER STYLES */
-
 .footer {
   background: var(--secondary-bg);
   border-top: 1px solid var(--border-color);
@@ -225,8 +231,6 @@ h3 {
   white-space: nowrap;
 }
 
-/* * 4. TOAST & UTILITIES (Needed from App.jsx) */
-
 .Toastify__toast--dark {
   background: var(--surface-bg) !important;
   color: var(--text-primary) !important;
@@ -254,8 +258,6 @@ h3 {
   border-left: 5px solid var(--error-color);
   color: var(--error-color);
 }
-
-/* * 5. ANIMATIONS & KEYFRAMES */
 
 @keyframes rotate-slow {
   from {
@@ -287,15 +289,18 @@ h3 {
   }
 }
 
-/* * 6. RESPONSIVE DESIGN (Base Layout) */
-
 @media (max-width: 1200px) {
   .nav-links {
-    gap: 8px;
+    gap: 6px;
+    max-width: calc(100vw - 350px);
   }
   .nav-button {
-    padding: 8px 10px;
-    font-size: 0.85rem;
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    gap: 3px;
+  }
+  .nav-button span {
+    display: none;
   }
 }
 
@@ -303,11 +308,17 @@ h3 {
   .nav-container {
     flex-direction: column;
     align-items: center;
+    padding: 1rem;
   }
   .nav-links {
     margin-top: 1rem;
     flex-wrap: wrap;
     justify-content: center;
+    max-width: 100%;
+    gap: 8px;
+  }
+  .nav-button span {
+    display: inline;
   }
   .settings-btn {
     margin-left: 0.5rem;
@@ -324,8 +335,6 @@ h3 {
   }
 }
 
-/* * 7. ISS COMMAND CENTER (Dashboard) STYLES */
-
 .iss-command-center {
   display: flex;
   flex-direction: column;
@@ -334,21 +343,19 @@ h3 {
   padding: 0;
 }
 
-/* Redefining the main area grid to fix layout */
 .main-content-cc {
-  flex-grow: 1; /* Allow it to fill space */
+  flex-grow: 1;
   display: grid;
-  /* Columns: Controls (1fr) | Main View (4fr) | Side Data (1.5fr) */
+
   grid-template-columns: 1fr 4fr 1.5fr;
-  grid-template-rows: 1fr; /* Single row for the main content block */
+  grid-template-rows: 1fr;
   gap: 20px;
   width: 100%;
   padding-bottom: 20px;
 }
 
-/* --- Header Section (Top of the Component) --- */
 .command-header {
-  grid-column: 1 / -1; /* This header should still span full width */
+  grid-column: 1 / -1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -371,7 +378,6 @@ h3 {
   margin-left: 5px;
 }
 
-/* --- Stats Cards (Right side of component header) --- */
 .header-stats {
   display: flex;
   gap: 15px;
@@ -379,14 +385,13 @@ h3 {
 }
 
 .stats-card {
-  /* High-tech, compact look */
   background: var(--accent-bg);
   padding: 12px 18px;
   border-radius: var(--border-radius);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-fast);
-  min-width: 100px; /* Ensure they don't shrink too much */
+  min-width: 100px;
 }
 .stats-card:hover {
   transform: translateY(-2px);
@@ -413,7 +418,6 @@ h3 {
   font-family: "Courier New", monospace;
 }
 
-/* Specific Stat Card Colors (Fixing the inline style mapping) */
 .stats-color-blue {
   border-left: 4px solid var(--info-color);
 }
@@ -445,7 +449,6 @@ h3 {
   color: var(--text-secondary);
 }
 
-/* --- Control Panel (Grid Area 1) --- */
 .control-panel {
   grid-column: 1 / 2;
   background: var(--accent-bg);
@@ -474,7 +477,7 @@ h3 {
 .control-btn {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Align text to the left */
+  justify-content: flex-start;
   gap: 8px;
   padding: 10px;
   background: var(--surface-bg);
@@ -502,21 +505,18 @@ h3 {
   font-weight: 700;
 }
 
-/* View Selector (Buttons at the bottom of the control panel) */
 .view-selector {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
 }
 .view-selector .view-btn {
-  /* Inherits styles from .control-btn but for a smaller group */
   font-size: 0.8rem;
   padding: 8px;
   justify-content: center;
   text-transform: capitalize;
 }
 
-/* --- Main View Area (Grid Area 2) --- */
 .main-view-container {
   grid-column: 2 / 3;
   position: relative;
@@ -527,14 +527,12 @@ h3 {
   overflow: hidden;
 }
 
-/* Ensure ISSTracker3D/ISSWorldMap fills the container */
 .main-view-container > div {
   width: 100%;
   height: 100%;
-  min-height: 70vh; /* Ensures a large, non-eww view for the 3D model */
+  min-height: 70vh;
 }
 
-/* --- Side Panel (Grid Area 3) --- */
 .side-panel {
   grid-column: 3 / 4;
   background: var(--accent-bg);
@@ -555,7 +553,6 @@ h3 {
   margin-bottom: 10px;
 }
 
-/* Side Panel Data Cards */
 .current-position-card,
 .next-pass-card,
 .solar-activity-card {
@@ -594,7 +591,6 @@ h3 {
   color: var(--primary-color);
 }
 
-/* --- Notification Panel --- */
 .notification-panel {
   position: fixed;
   top: 100px;
@@ -629,7 +625,6 @@ h3 {
   font-weight: 600;
 }
 
-/* --- Status Bar (Component Footer) --- */
 .status-bar {
   background: var(--secondary-bg);
   border-top: 2px solid var(--border-color);
@@ -672,12 +667,10 @@ h3 {
   color: var(--text-secondary);
 }
 
-/* * 8. RESPONSIVENESS for Command Center */
-
 @media (max-width: 1200px) {
   .main-content-cc {
     grid-template-columns: 3fr 2fr;
-    grid-template-rows: auto 1fr; /* Controls on top */
+    grid-template-rows: auto 1fr;
   }
   .command-header {
     flex-wrap: wrap;
@@ -689,18 +682,18 @@ h3 {
     text-align: center;
   }
   .control-panel {
-    grid-column: 1 / -1; /* Controls span full width now */
+    grid-column: 1 / -1;
     grid-row: 1 / 2;
-    flex-direction: row; /* Horizontal layout for controls */
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
   }
   .main-view-container {
-    grid-column: 1 / 2; /* Main view takes the left column */
+    grid-column: 1 / 2;
     grid-row: 2 / 3;
   }
   .side-panel {
-    grid-column: 2 / 3; /* Side panel takes the right column */
+    grid-column: 2 / 3;
     grid-row: 2 / 3;
   }
   .stats-card {
@@ -710,9 +703,8 @@ h3 {
 
 @media (max-width: 850px) {
   .main-content-cc {
-    /* Single column layout for all elements */
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr; /* Controls | Side Panel | Main View (pushed to bottom) */
+    grid-template-rows: auto auto 1fr;
   }
   .control-panel,
   .side-panel,
@@ -743,23 +735,19 @@ h3 {
 
 .main-view-container > div,
 .main-view-container canvas {
-  /* 🌟 CRITICAL FIX: Ensures the 3D rendering element (canvas) fills the box */
   width: 100% !important;
   height: 100% !important;
-  position: absolute; /* Ensures it sits perfectly inside the parent */
+  position: absolute;
   top: 0;
   left: 0;
 }
 
 .main-view-container {
-  /* Ensure the container itself can establish the rendering context */
   position: relative;
-  display: flex; /* Helps ensure inner elements conform */
+  display: flex;
   justify-content: center;
   align-items: center;
 }
-
-/* * 9. VISUALIZATION & VIEW-SWITCHING STYLES (Final Touches) */
 
 .main-view-container {
   display: flex;
@@ -822,9 +810,6 @@ h3 {
   font-weight: 700;
 }
 
-/* --- Data View Grid (When 'DATA' is selected) --- */
-
-/* This styles the container for the TLEAnalysis, CrewInfo, and LiveFeeds when view='data' */
 .data-view-grid {
   width: 100%;
   height: 100%;
@@ -834,12 +819,10 @@ h3 {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 20px;
-  background: var(--surface-bg); /* Dark, subtle background for data mode */
+  background: var(--surface-bg);
 }
 
-/* Ensure child components fill their grid cells gracefully */
 .data-view-grid > div {
-  /* If the child components are containers, make sure they fill the cell */
   width: 100%;
   height: 100%;
   background: var(--accent-bg);
@@ -849,9 +832,6 @@ h3 {
   overflow: hidden;
 }
 
-/* --- World Map View (When 'MAP' is selected) --- */
-
-/* This styles the container for the ISSWorldMap component when view='map' */
 .map-view-container {
   width: 100%;
   height: 100%;
@@ -863,35 +843,20 @@ h3 {
   align-items: center;
   overflow: hidden;
 }
-/* Ensure map component content fills the map container */
+
 .map-view-container > * {
   width: 100%;
   height: 100%;
 }
-/* 
-*
-  10.
-  TLE
-  DATA
-  &
-  ORBITAL
-  ANALYSIS
-  STYLES
-  (Overflow Fix)
-  .tle-analysis-container {
-  padding: 20px 0;
-} */
 
-/* --- Layout Grid --- */
 .tle-grid {
   display: grid;
-  /* Redefined columns for a 3-column layout */
+
   grid-template-columns: repeat(3, 1fr);
-  /* REMOVED fixed grid-template-rows to allow content to define row height */
+
   gap: 20px;
 }
 
-/* Component Header */
 .tle-analysis-container .tle-header {
   grid-column: 1 / -1;
   display: flex;
@@ -923,8 +888,6 @@ h3 {
   transition: all var(--transition-fast);
 }
 
-/* --- TLE SECTIONS (Base Card Style) --- */
-
 .tle-section {
   background: var(--accent-bg);
   padding: 20px;
@@ -933,9 +896,9 @@ h3 {
   box-shadow: var(--shadow-md);
   display: flex;
   flex-direction: column;
-  /* Ensure no minimum height that could cause clipping, rely on content. */
+
   min-height: 0;
-  overflow: hidden; /* Hide the parent box's overflow just in case, but rely on inner fixes. */
+  overflow: hidden;
 }
 
 .tle-section h3 {
@@ -946,7 +909,6 @@ h3 {
   margin-bottom: 15px;
 }
 
-/* 1. Orbital Elements Card (Positioning) */
 .tle-section:nth-child(1) {
   grid-column: 1 / 2;
   border-left: 5px solid var(--info-color);
@@ -978,10 +940,9 @@ h3 {
   font-family: "Courier New", monospace;
 }
 
-/* 2. TLE Raw Data (Positioning) */
 .tle-section:nth-child(2) {
   grid-column: 3 / 4;
-  grid-row: 1 / span 2; /* Spans two rows vertically to contain the raw data */
+  grid-row: 1 / span 2;
   border-left: 5px solid var(--warning-color);
   background: var(--card-bg);
 }
@@ -992,7 +953,7 @@ h3 {
 }
 .tle-info {
   display: grid;
-  grid-template-columns: 1fr; /* Stack meta info vertically */
+  grid-template-columns: 1fr;
   gap: 10px;
   margin-bottom: 15px;
   padding-bottom: 10px;
@@ -1004,7 +965,7 @@ h3 {
   border-radius: var(--border-radius);
   font-family: "Courier New", monospace;
   font-size: 0.85rem;
-  overflow: auto; /* Allow scrolling within the code block */
+  overflow: auto;
   flex-grow: 1;
   border: 1px solid var(--warning-color);
   box-shadow: inset 0 0 5px rgba(255, 170, 0, 0.3);
@@ -1021,10 +982,8 @@ h3 {
   margin-top: 15px;
 }
 .tle-action-btn {
-  /* Inherited styles */
 }
 
-/* 6. Orbital Statistics (Positioning) */
 .tle-section.stats-section {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
@@ -1037,12 +996,10 @@ h3 {
 }
 .stats-grid .stat-card {
   background: var(--secondary-bg);
-  /* Inherits all other stat styles */
 }
 
-/* 3, 4, 5. Charts (Altitude, Velocity, Radar) - Positioning & Height */
 .tle-section.chart-section {
-  min-height: 350px; /* Give a fixed, reasonable minimal height for charts */
+  min-height: 350px;
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-md);
   transition: all var(--transition-smooth);
@@ -1053,22 +1010,19 @@ h3 {
 }
 
 .tle-section:nth-child(3) {
-  /* Altitude */
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   border-left: 5px solid var(--primary-color);
 }
 .tle-section:nth-child(4) {
-  /* Velocity */
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   border-left: 5px solid var(--secondary-color);
 }
 .tle-section:nth-child(5) {
-  /* Radar */
-  grid-column: 1 / -1; /* Radar spans all columns on the final row */
+  grid-column: 1 / -1;
   grid-row: 3 / 4;
-  min-height: 450px; /* Give the radar more space */
+  min-height: 450px;
   border-left: 5px solid var(--info-color);
 }
 
@@ -1076,43 +1030,35 @@ h3 {
   flex-grow: 1;
   position: relative;
   padding-top: 10px;
-  height: 100%; /* Important: chart container must fill the parent flex/grid item */
+  height: 100%;
 }
-
-/* --- TLE RESPONSIVENESS (Adjusted) --- */
 
 @media (max-width: 1200px) {
   .tle-grid {
-    grid-template-columns: 1fr 1fr; /* Two columns */
+    grid-template-columns: 1fr 1fr;
   }
   .tle-section:nth-child(1) {
-    /* Elements */
     grid-column: 1 / 2;
     grid-row: 1;
   }
   .tle-section.stats-section {
-    /* Stats */
     grid-column: 2 / 3;
     grid-row: 1;
   }
   .tle-section:nth-child(2) {
-    /* TLE raw data */
-    grid-column: 1 / -1; /* Full width */
+    grid-column: 1 / -1;
     grid-row: 2;
     min-height: 400px;
   }
   .tle-section:nth-child(3) {
-    /* Altitude chart */
     grid-column: 1 / 2;
     grid-row: 3;
   }
   .tle-section:nth-child(4) {
-    /* Velocity chart */
     grid-column: 2 / 3;
     grid-row: 3;
   }
   .tle-section:nth-child(5) {
-    /* Radar spans bottom full width */
     grid-column: 1 / -1;
     grid-row: 4;
   }
@@ -1120,7 +1066,7 @@ h3 {
 
 @media (max-width: 768px) {
   .tle-grid {
-    grid-template-columns: 1fr; /* Single column */
+    grid-template-columns: 1fr;
     gap: 15px;
   }
   .tle-section {
@@ -1143,7 +1089,7 @@ h3 {
   display: flex;
   flex-direction: row;
   width: 100%;
-  /* Use calc() to ensure the container fills the remaining viewport height */
+
   min-height: calc(100vh - 180px);
   background-color: var(--primary-bg);
   border-radius: var(--border-radius-lg);
@@ -1151,25 +1097,22 @@ h3 {
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
 }
 
-/* 3D Canvas Area */
 .three-canvas {
-  flex: 1; /* Takes all available remaining space */
+  flex: 1;
   position: relative;
-  background: var(--secondary-bg); /* Default background color */
+  background: var(--secondary-bg);
   border-right: 1px solid var(--primary-color);
   box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.2);
 }
 
-/* Ensure the THREE.js renderer/canvas fills the container perfectly */
 .three-canvas canvas {
   width: 100% !important;
   height: 100% !important;
-  display: block; /* Removes any browser default margins/padding */
+  display: block;
 }
 
-/* --- Data Panel (Sidebar) --- */
 .data-panel {
-  width: 320px; /* Fixed width for the data sidebar */
+  width: 320px;
   min-width: 300px;
   background: linear-gradient(180deg, var(--accent-bg), var(--secondary-bg));
   padding: 2rem;
@@ -1189,7 +1132,6 @@ h3 {
   text-shadow: 0 0 5px var(--secondary-color);
 }
 
-/* Individual Data Items */
 .data-item {
   display: flex;
   justify-content: space-between;
@@ -1216,14 +1158,11 @@ h3 {
   text-shadow: 0 0 3px rgba(0, 255, 255, 0.5);
 }
 
-/* Error/Loading state inside the panel */
 .data-panel p {
   color: var(--text-secondary);
   font-style: italic;
   padding: 10px 0;
 }
-
-/* --- Responsive Adjustments for Tracker --- */
 
 @media (max-width: 900px) {
   .tracker-container {
@@ -1232,7 +1171,7 @@ h3 {
   }
 
   .three-canvas {
-    min-height: 50vh; /* Ensure 3D view is large enough on mobile */
+    min-height: 50vh;
     border-right: none;
     border-bottom: 1px solid var(--primary-color);
   }
@@ -1245,16 +1184,14 @@ h3 {
   }
 }
 
-/* * 12. CREW INFO STYLES  */
 .crew-info-container {
   padding: 20px 0;
   display: grid;
-  /* Grid layout for major sections: Overview | Crew List (main) | Schedule */
+
   grid-template-columns: 1fr 2fr 1fr;
   gap: 25px;
 }
 
-/* --- A. Mission Overview (Top Left) --- */
 .mission-overview {
   grid-column: 1 / 2;
   grid-row: 1;
@@ -1311,10 +1248,9 @@ h3 {
   text-transform: uppercase;
 }
 
-/* --- B. Crew Members List (Center) --- */
 .crew-section {
   grid-column: 2 / 3;
-  grid-row: 1 / 3; /* Spans two rows, taking the center column */
+  grid-row: 1 / 3;
 }
 
 .crew-section h2 {
@@ -1349,7 +1285,7 @@ h3 {
 
 .crew-member-header {
   display: grid;
-  grid-template-columns: 100px 1fr 1.5fr; /* Photo | Basic Info | Stats */
+  grid-template-columns: 100px 1fr 1.5fr;
   padding: 15px;
   align-items: center;
   background: var(--secondary-bg);
@@ -1419,7 +1355,6 @@ h3 {
   font-size: 0.9rem;
 }
 
-/* --- Crew Member Details (Expansion) --- */
 .crew-member-details {
   background: var(--accent-bg);
   border-top: 1px solid var(--border-color);
@@ -1473,10 +1408,9 @@ h3 {
   line-height: 1.5;
 }
 
-/* --- C. Crew Schedule (Right Column) --- */
 .crew-schedule {
   grid-column: 3 / 4;
-  grid-row: 1 / 3; /* Spans two rows, taking the right column */
+  grid-row: 1 / 3;
   background: var(--accent-bg);
   padding: 20px;
   border-radius: var(--border-radius-lg);
@@ -1536,7 +1470,6 @@ h3 {
   color: var(--text-muted);
 }
 
-/* Type Specific Schedule Bars */
 .schedule-item.type-science {
   border-left-color: var(--success-color);
 }
@@ -1547,7 +1480,6 @@ h3 {
   border-left-color: var(--warning-color);
 }
 
-/* --- D. Footer/Loading (Bottom) --- */
 .crew-footer {
   grid-column: 1 / -1;
   padding-top: 20px;
@@ -1559,7 +1491,6 @@ h3 {
   color: var(--text-muted);
 }
 
-/* API Status and Loading States */
 .api-status {
   margin-bottom: 1.5rem;
 }
@@ -1623,12 +1554,91 @@ h3 {
   }
 }
 
-/* * 13. CREW INFO RESPONSIVENESS */
- @media (max-width: 1400px) {
+.command-center-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 255, 255, 0.05) 0%,
+    transparent 70%
+  );
+  padding: 2rem;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 500px;
+}
+
+.loading-icon {
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 0 10px var(--primary-color));
+}
+
+.command-center-loading h2 {
+  color: var(--text-primary);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.command-center-loading p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.loading-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.loading-steps .step {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.8rem 1.2rem;
+  background: rgba(12, 21, 56, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  transition: all var(--transition-smooth);
+  backdrop-filter: blur(5px);
+}
+
+.loading-steps .step:hover {
+  border-color: var(--primary-color);
+  background: rgba(0, 255, 255, 0.05);
+  transform: translateX(5px);
+}
+
+.command-center-loading .loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--primary-color);
+  border-right: 4px solid var(--secondary-color);
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+  filter: drop-shadow(0 0 8px var(--primary-color));
+}
+
+@media (max-width: 1400px) {
   .crew-info-container {
-    /* Layout: Overview | Crew List (spans 2) */
     grid-template-columns: 1fr 2fr;
-    grid-template-rows: auto 1fr; /* Overview & Schedule on top row, crew list wraps */
+    grid-template-rows: auto 1fr;
   }
   .mission-overview {
     grid-column: 1 / 2;
@@ -1639,7 +1649,7 @@ h3 {
     grid-row: 1;
   }
   .crew-section {
-    grid-column: 1 / -1; /* Crew list goes full width below */
+    grid-column: 1 / -1;
     grid-row: 2;
   }
   .details-content {
@@ -1649,7 +1659,6 @@ h3 {
 
 @media (max-width: 900px) {
   .crew-info-container {
-    /* Single column stacked layout */
     grid-template-columns: 1fr;
     gap: 15px;
   }
@@ -1661,18 +1670,17 @@ h3 {
     grid-row: auto !important;
   }
   .crew-member-header {
-    grid-template-columns: 80px 1fr; /* Remove the dedicated stats column */
+    grid-template-columns: 80px 1fr;
     gap: 10px;
   }
   .crew-stats {
-    display: none; /* Hide detailed stats on small header view */
+    display: none;
   }
   .crew-basic-info {
     padding-left: 10px;
   }
 }
 
-/* * 14. LIVE FEEDS STYLES  */
 .live-feeds-container {
   padding: 20px 0;
 }
@@ -1686,16 +1694,14 @@ h3 {
   text-shadow: 0 0 8px rgba(255, 0, 255, 0.5);
 }
 
-/* --- Main Content Layout --- */
 .feeds-content {
   display: grid;
-  /* Columns: Main Player (3fr) | Sidebar (1fr) */
+
   grid-template-columns: 3fr 1fr;
   gap: 20px;
   min-height: 75vh;
 }
 
-/* --- A. Main Player Section (Left) --- */
 .main-player {
   grid-column: 1 / 2;
   background: var(--surface-bg);
@@ -1767,12 +1773,11 @@ h3 {
   pointer-events: auto;
 }
 
-/* Player Controls Bar */
 .player-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(12, 21, 56, 0.8); /* secondary-bg transparency */
+  background: rgba(12, 21, 56, 0.8);
   padding: 10px 15px;
   border-radius: var(--border-radius);
   border: 1px solid var(--primary-color);
@@ -1810,7 +1815,6 @@ h3 {
   color: var(--primary-bg);
 }
 
-/* Volume Slider */
 .volume-slider {
   width: 80px;
 }
@@ -1833,7 +1837,6 @@ h3 {
   box-shadow: 0 0 5px var(--primary-color);
 }
 
-/* --- B. Sidebar (Right) --- */
 .feeds-sidebar {
   grid-column: 2 / 3;
   display: flex;
@@ -1841,7 +1844,6 @@ h3 {
   gap: 20px;
 }
 
-/* Feed Selector List */
 .feed-selector {
   background: var(--accent-bg);
   padding: 20px;
@@ -1911,7 +1913,6 @@ h3 {
   text-transform: uppercase;
 }
 
-/* Status Dots */
 .status-dot-online {
   color: var(--success-color);
 }
@@ -1926,7 +1927,6 @@ h3 {
   font-size: 0.8rem;
 }
 
-/* Feed Info & Technical Info Panels */
 .feed-info-panel,
 .technical-info {
   background: var(--accent-bg);
@@ -2005,7 +2005,6 @@ h3 {
   margin-bottom: 5px;
 }
 
-/* Fullscreen Mode */
 .live-feeds-container.fullscreen {
   position: fixed;
   top: 0;
@@ -2017,30 +2016,27 @@ h3 {
   overflow: hidden;
 }
 .live-feeds-container.fullscreen .feeds-content {
-  min-height: calc(100vh - 50px); /* Adjust space for the header */
+  min-height: calc(100vh - 50px);
 }
 .live-feeds-container.fullscreen .feeds-sidebar {
-  display: none; /* Hide sidebar in fullscreen */
+  display: none;
 }
 .live-feeds-container.fullscreen .main-player {
-  grid-column: 1 / -1; /* Main player goes full width */
-  height: calc(100vh - 40px); /* Fill screen height minus some padding */
+  grid-column: 1 / -1;
+  height: calc(100vh - 40px);
   padding-top: 0;
 }
 .live-feeds-container.fullscreen .player-wrapper {
-  padding-top: 0; /* Override aspect ratio padding in fullscreen */
+  padding-top: 0;
   height: 100%;
 }
 
-/* --- Mobile Feed Selector (Bottom Bar) --- */
 .mobile-feed-selector {
-  display: none; /* Hidden by default */
+  display: none;
 }
 
-/* * 15. LIVE FEEDS RESPONSIVENESS  */
 @media (max-width: 1200px) {
   .feeds-content {
-    /* Single column layout */
     grid-template-columns: 1fr;
     min-height: auto;
   }
@@ -2056,33 +2052,32 @@ h3 {
   .feed-selector,
   .feed-info-panel,
   .technical-info {
-    flex: 1; /* Allows panels to shrink/grow */
+    flex: 1;
     min-width: 250px;
   }
   .feed-grid {
-    flex-direction: row; /* Horizontal scrolling feed selection */
+    flex-direction: row;
     overflow-x: auto;
     white-space: nowrap;
     padding-bottom: 5px;
   }
   .feed-card {
-    flex: 0 0 auto; /* Prevents cards from shrinking */
+    flex: 0 0 auto;
     width: 280px;
   }
 }
 
 @media (max-width: 768px) {
   .feeds-sidebar {
-    flex-direction: column; /* Stack sidebar items vertically again */
+    flex-direction: column;
   }
   .feeds-content {
     gap: 15px;
   }
   .feed-selector {
-    display: none; /* Hide large selector on mobile */
+    display: none;
   }
 
-  /* Show mobile-friendly selector */
   .mobile-feed-selector {
     display: flex;
     justify-content: space-around;
@@ -2110,10 +2105,6 @@ h3 {
   }
 }
 
-/* * 16. AI ASSISTANT (Chatbot) STYLES - CHATGPT/CONSOLE V2 */
- 
-
-/* Chatbot Cache Features */
 .chatbot-header {
   display: flex;
   align-items: center;
@@ -2130,7 +2121,6 @@ h3 {
   gap: 1rem;
 }
 
-/* Redis Status Indicator */
 .redis-status {
   display: flex;
   align-items: center;
@@ -2214,7 +2204,6 @@ h3 {
   color: var(--primary-bg);
 }
 
-/* Message enhancements for cache indicators */
 .bot-icon-container {
   position: relative;
   display: flex;
@@ -2278,17 +2267,16 @@ h3 {
 }
 
 .chatbot-container {
-  height: 80vh; /* Taller */
+  height: 80vh;
   display: flex;
   flex-direction: column;
   background: var(--accent-bg);
   border-radius: var(--border-radius-lg);
-  border: 3px solid var(--primary-color); /* Neon frame */
+  border: 3px solid var(--primary-color);
   box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
   overflow: hidden;
 }
 
-/* --- Chat Messages Display Area --- */
 .chat-messages {
   flex-grow: 1;
   overflow-y: auto;
@@ -2299,16 +2287,14 @@ h3 {
   background: var(--surface-bg);
 }
 
-/* --- Individual Message Rows (Flatter, Wider look) --- */
 .message-row {
   display: flex;
   align-items: flex-start;
-  max-width: 100%; /* Allow messages to use full width */
-  padding: 5px 0; /* Add vertical padding for spacing */
+  max-width: 100%;
+  padding: 5px 0;
   animation: fadeIn 0.3s ease-out;
 }
 
-/* User Message */
 .message-row.user {
   justify-content: flex-end;
   align-self: flex-end;
@@ -2329,7 +2315,6 @@ h3 {
   font-size: 1.2rem;
 }
 
-/* Bot Message */
 .message-row.bot {
   justify-content: flex-start;
   align-self: flex-start;
@@ -2342,18 +2327,15 @@ h3 {
   filter: drop-shadow(0 0 4px var(--secondary-color));
 }
 
-/* Message Bubbles - Simplified and flat */
 .message-bubble {
-  padding: 0; /* Remove padding from bubble container itself */
-  max-width: 85%; /* Keep it reasonably narrow */
+  padding: 0;
+  max-width: 85%;
   line-height: 1.6;
   font-size: 1rem;
   color: var(--text-primary);
   word-break: break-word;
-  /* Remove background/borders for a console/flat look */
 }
 
-/* Specific Formatting for Structured Response (markdown/HTML) */
 .message-row.bot .message-bubble p {
   margin: 5px 0;
 }
@@ -2377,7 +2359,6 @@ h3 {
   text-align: right;
 }
 
-/* --- Loading State (ChatGPT style dots) --- */
 .loading-state {
   padding: 8px 0 0 0;
 }
@@ -2389,7 +2370,6 @@ h3 {
 .loading-dots::before,
 .loading-dots::after,
 .loading-state::before {
-  /* Clear default content */
   content: none !important;
 }
 
@@ -2419,7 +2399,7 @@ h3 {
     opacity: 1;
   }
 }
-/* We don't need the span elements in the JSX, we can mock the dots here: */
+
 .message-row.bot .loading-state .message-bubble::after {
   content: "";
   display: flex;
@@ -2427,7 +2407,7 @@ h3 {
   width: 32px;
   height: 8px;
   background: none;
-  /* Create 3 bouncing dots */
+
   --dot-color: var(--secondary-color);
   --dot-size: 8px;
   --dot-spacing: 4px;
@@ -2456,13 +2436,12 @@ h3 {
   }
 }
 
-/* --- Input Area --- */
 .chat-input-area {
   display: flex;
   padding: 15px 20px;
   gap: 10px;
   align-items: center;
-  border-top: 1px solid var(--primary-color); /* Clear visual separation */
+  border-top: 1px solid var(--primary-color);
   background: var(--secondary-bg);
 }
 .chat-input {
@@ -2485,10 +2464,8 @@ h3 {
   background: linear-gradient(135deg, var(--primary-color), var(--info-color));
   color: var(--primary-bg);
   font-weight: 700;
-  /* Ensure button takes space for both icon and text */
 }
 
-/* --- Chatbot Responsiveness --- */
 @media (max-width: 768px) {
   .chatbot-container-wrapper {
     padding: 10px;
@@ -2500,25 +2477,23 @@ h3 {
     padding: 10px 15px;
   }
   .chat-send-button span {
-    display: none; /* Hide text on small screens */
+    display: none;
   }
 }
 
-/* --- CSS for HTML elements rendered inside the Chat Bubble --- */
-
 .message-row.bot .message-bubble b,
 .message-row.bot .message-bubble strong {
-  color: var(--primary-color); /* Highlight bold text */
+  color: var(--primary-color);
   font-weight: 700;
 }
 
 .message-row.bot .message-bubble p {
-  margin: 10px 0; /* Clear paragraph separation */
+  margin: 10px 0;
 }
 
 .message-row.bot .message-bubble ul {
   list-style-type: disc;
-  padding-left: 25px; /* Indent lists properly */
+  padding-left: 25px;
   margin: 10px 0 10px 0;
 }
 
@@ -2527,7 +2502,6 @@ h3 {
   color: var(--text-secondary);
 }
 
-/* * 17. NASA HISTORY STYLES (Interactive Timeline)  */
 .history-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -2544,13 +2518,11 @@ h3 {
   text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
 }
 
-/* --- Timeline Structure --- */
 .timeline {
   position: relative;
   padding: 20px 0;
 }
 
-/* The central vertical line */
 .timeline::after {
   content: "";
   position: absolute;
@@ -2573,21 +2545,19 @@ h3 {
   width: 50%;
 }
 
-/* Left side items */
 .timeline-item.left {
   left: 0;
-  padding-right: 40px; /* Space for the circle */
-}
-/* Right side items */
-.timeline-item.right {
-  left: 50%;
-  padding-left: 40px; /* Space for the circle */
+  padding-right: 40px;
 }
 
-/* The date circle/point */
+.timeline-item.right {
+  left: 50%;
+  padding-left: 40px;
+}
+
 .timeline-circle {
   position: absolute;
-  width: 80px; /* Wider to fit the year */
+  width: 80px;
   height: 40px;
   background: var(--primary-bg);
   border: 3px solid var(--primary-color);
@@ -2603,13 +2573,12 @@ h3 {
 }
 
 .timeline-item.left .timeline-circle {
-  right: -40px; /* Positioned on the center line */
+  right: -40px;
 }
 .timeline-item.right .timeline-circle {
-  left: -40px; /* Positioned on the center line */
+  left: -40px;
 }
 
-/* --- Content Card --- */
 .timeline-item-content {
   background: var(--accent-bg);
   padding: 25px;
@@ -2638,7 +2607,6 @@ h3 {
   font-size: 0.95rem;
 }
 
-/* Learn More Button */
 .timeline-button {
   background: linear-gradient(135deg, var(--info-color), var(--primary-color));
   color: var(--primary-bg);
@@ -2660,7 +2628,6 @@ h3 {
   transform: translateY(-1px);
 }
 
-/* --- Modal Styles (for Learn More details) --- */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -2720,7 +2687,6 @@ h3 {
   font-size: 1rem;
 }
 
-/* Markdown styling within modal */
 .modal-body h4 {
   color: var(--accent-color);
   margin-top: 15px;
@@ -2738,7 +2704,6 @@ h3 {
   margin-top: 10px;
 }
 
-/* Modal Loading State */
 .modal-loader {
   display: flex;
   flex-direction: column;
@@ -2754,14 +2719,13 @@ h3 {
   margin-bottom: 15px;
 }
 
-/* --- History Responsiveness --- */
 @media (max-width: 900px) {
   .timeline::after {
-    left: 20px; /* Move vertical line to the left edge */
+    left: 20px;
   }
   .timeline-item {
     width: 100%;
-    padding-left: 60px; /* Make space for the circle */
+    padding-left: 60px;
     padding-right: 10px;
     left: 0;
   }
@@ -2784,19 +2748,15 @@ h3 {
   }
 }
 
-/* * 18. SETTINGS MODAL STYLES (Final Component) */
- 
-
-/* --- Modal Overlay & Container --- */
 .settings-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(3, 8, 24, 0.95); /* Primary BG with high transparency */
+  background: rgba(3, 8, 24, 0.95);
   backdrop-filter: blur(8px);
-  z-index: 5000; /* Highest priority */
+  z-index: 5000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2817,7 +2777,6 @@ h3 {
   animation: fadeIn 0.3s ease-out;
 }
 
-/* --- Header & Close Button --- */
 .settings-header {
   display: flex;
   align-items: center;
@@ -2849,7 +2808,6 @@ h3 {
   transform: rotate(90deg) scale(1.1);
 }
 
-/* --- Content & Navigation Tabs --- */
 .settings-content {
   display: flex;
   flex: 1;
@@ -2894,7 +2852,6 @@ h3 {
   box-shadow: 5px 0 10px rgba(255, 0, 255, 0.2) inset;
 }
 
-/* --- Settings Panel (The active content view) --- */
 .settings-panel {
   flex: 1;
   padding: 2rem;
@@ -2902,7 +2859,6 @@ h3 {
   background: var(--surface-bg);
 }
 
-/* Scrollbar Enhancement for Settings Panel */
 .settings-panel::-webkit-scrollbar {
   width: 8px;
 }
@@ -2919,7 +2875,6 @@ h3 {
   gap: 2.5rem;
 }
 
-/* --- Settings Groups & Items --- */
 .setting-group {
   background: var(--secondary-bg);
   border-radius: var(--border-radius);
@@ -2950,7 +2905,6 @@ h3 {
   margin-bottom: 0;
 }
 
-/* Checkbox Labels */
 .setting-label {
   color: var(--text-primary);
   font-weight: 500;
@@ -2975,7 +2929,6 @@ h3 {
   margin-left: 1.75rem;
 }
 
-/* Select/Dropdowns */
 .setting-item select {
   background: var(--card-bg);
   border: 1px solid var(--primary-color);
@@ -2992,7 +2945,6 @@ h3 {
   color: var(--text-primary);
 }
 
-/* --- Location Display --- */
 .location-display {
   display: flex;
   align-items: center;
@@ -3027,7 +2979,6 @@ h3 {
   box-shadow: 0 5px 10px rgba(88, 166, 255, 0.4);
 }
 
-/* --- Storage Bar --- */
 .storage-info-display {
   padding: 15px;
   background: var(--card-bg);
@@ -3069,7 +3020,6 @@ h3 {
   transition: width 0.5s ease;
 }
 
-/* --- Data Action Buttons --- */
 .setting-actions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -3122,7 +3072,6 @@ h3 {
   background: var(--error-bg);
 }
 
-/* --- Modal Footer --- */
 .settings-footer {
   padding: 1rem 1.5rem;
   border-top: 2px solid var(--border-color);
@@ -3136,7 +3085,6 @@ h3 {
   font-size: 0.875rem;
 }
 
-/* --- Settings Responsiveness --- */
 @media (max-width: 768px) {
   .settings-modal {
     max-height: 90vh;
