@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import axios from "axios";
 import xml2js from "xml2js";
-import { globSync } from "glob"; // ESM import for glob
+import { globSync } from "glob";
 import satellite from "satellite.js";
 
 const app = express();
@@ -13,7 +13,10 @@ const PORT = process.env.PORT || 3000;
 
 // ----------- Middleware ------------
 app.use(cors({
-  origin: ["http://localhost:5173", "https://nasa-iss-space-surfers.vercel.app"],
+  origin: [
+    "http://localhost:5173",
+    "https://nasa-iss-space-surfers.vercel.app"
+  ],
 }));
 
 // ----------- Helpers ------------
@@ -77,6 +80,7 @@ app.get("/", (req, res) => {
       <li><a href="/cities">/cities</a></li>
       <li><a href="/countries">/countries</a></li>
       <li><a href="/current-iss">/current-iss</a></li>
+      <li><a href="/astronauts">/astronauts</a></li>
       <li><a href="/iss-location-at?minutes_from_now=0">/iss-location-at</a></li>
     </ul>
   `);
@@ -109,10 +113,11 @@ app.get("/countries", (req, res) => {
   res.json(countries);
 });
 
-// Get current ISS position from open-notify API
+// ✅ Get current ISS position via HTTPS proxy
 app.get("/current-iss", async (req, res) => {
   try {
-    const response = await axios.get("http://api.open-notify.org/iss-now.json");
+    const proxyUrl = "https://api.allorigins.win/raw?url=http://api.open-notify.org/iss-now.json";
+    const response = await axios.get(proxyUrl);
     const data = response.data;
     if (data.message !== "success") throw new Error("ISS API error");
     res.json({
@@ -120,6 +125,19 @@ app.get("/current-iss", async (req, res) => {
       longitude: parseFloat(data.iss_position.longitude)
     });
   } catch (err) {
+    console.error("ISS API Error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Get list of astronauts via HTTPS proxy
+app.get("/astronauts", async (req, res) => {
+  try {
+    const proxyUrl = "https://api.allorigins.win/raw?url=http://api.open-notify.org/astros.json";
+    const response = await axios.get(proxyUrl);
+    res.json(response.data);
+  } catch (err) {
+    console.error("Astronaut API Error:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
@@ -149,9 +167,10 @@ app.get("/iss-location-at", async (req, res) => {
       altitude_km: geo.height
     });
   } catch (err) {
+    console.error("ISS location error:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
 
 // ---------- Start server ------------
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
